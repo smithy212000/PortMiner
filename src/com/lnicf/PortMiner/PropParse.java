@@ -39,7 +39,7 @@ public class PropParse {
                     output = new FileOutputStream("portminer.properties");
                 }
 
-                prop.setProperty("config-version", "1.0");
+                prop.setProperty("config-version", Double.toString(PortMiner.configVersion));
                 prop.setProperty("find-ip", "true");
                 prop.setProperty("internal-ip", "0.0.0.0");
                 prop.setProperty("port", "25565");
@@ -48,6 +48,8 @@ public class PropParse {
                 prop.setProperty("xmx", "1024");
                 prop.setProperty("maxpermsize", "64");
                 prop.setProperty("safe-close", "true");
+                prop.setProperty("run-server", "true");
+                prop.setProperty("run-server-false-protocol", "TCP");
                 prop.store(output, null);
             } catch (IOException e) {
                 Logger.log("Exception while creating properties file", "error");
