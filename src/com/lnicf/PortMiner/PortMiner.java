@@ -16,8 +16,8 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
     // Main class.
-    public static final double softVersion = 4.3;
-    public static final double configVersion = 1.0;
+    public static final double softVersion = 4.4;
+    public static final double configVersion = 1.1;
 
     public static void main(String[] args) throws InterruptedException {
         // Initialise all the variables.
@@ -27,7 +27,9 @@ public class PortMiner {
         String xmx = null;
         String maxpermsize = null;
         boolean safeClose = false;
+        boolean runServer = true;
         String sServerJar = null;
+        String protocol = null;
         File fMinTTY = new File("bin/mintty.exe");
         File eulaText = null;
         if (Multi.getOS() == "WINDOWS") {
@@ -73,6 +75,19 @@ public class PortMiner {
             maxpermsize = PropParse.getProperty("maxpermsize");
             Progress.setProgress("Getting property safe-close...", 18);
             safeClose = Boolean.parseBoolean(PropParse.getProperty("safe-close"));
+            Progress.setProgress("Getting property run-server...", 20);
+            runServer = Boolean.parseBoolean(PropParse.getProperty("run-server"));
+            Progress.setProgress("Getting property run-server-false-protocol", 22);
+            protocol = PropParse.getProperty("run-server-false-protocol");
+            if (protocol.equals("TCP") || protocol.equals("UDP")) {
+                
+            } else {
+                Logger.log("Exception while getting properties.", "error");
+                JOptionPane.showMessageDialog(null,
+                        "PortMiner had an error reading the configuration.\nTry deleting it, and restarting PortMiner.",
+                        "Failure reading configuration", JOptionPane.WARNING_MESSAGE);
+                System.exit(1);
+            }
         } catch (NumberFormatException e) {
             Logger.log("Exception while getting properties.", "error");
             JOptionPane.showMessageDialog(null,
@@ -90,6 +105,11 @@ public class PortMiner {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             PropParse.setProperty("safe-close", "false");
+        }
+        
+        if (runServer == false) {
+            Progress.closeFrame();
+            NoServer.run();
         }
 
         // Check for server jar file defined in configuration. If not found, ask
@@ -173,7 +193,7 @@ public class PortMiner {
             Logger.log("Internal IP is " + Multi.internalIP(), "info");
             Logger.log("Opening port " + port, "info");
             Progress.setProgress("Attempting to open port " + port, 65);
-            PortManager.openPort(Multi.internalIP(), port, "Minecraft Server");
+            PortManager.openPort(Multi.internalIP(), port, "Minecraft Server", "TCP");
 
             // Set up process and runtime.
             Progress.setProgress("Setting up process and runtime...", 75);
