@@ -10,9 +10,15 @@ public class PortManager {
     private static PortMapping mapping = null;
     private static UpnpService upnpService = null;
 
-    public static void openPort(String internalIP, int port, String name) {
+    public static void openPort(String internalIP, int port, String name, String protocol) {
         // Create mapping, then use it.
-        mapping = new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name);
+        if (protocol == "TCP") {
+            mapping = new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name);
+        } else if (protocol == "UDP") {
+            mapping = new PortMapping(port, internalIP, PortMapping.Protocol.UDP, name);
+        } else {
+            mapping = new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name);
+        }
         upnpService = new UpnpServiceImpl(new PortMappingListener(mapping));
         upnpService.getControlPoint().search();
     }
