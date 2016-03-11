@@ -16,7 +16,7 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
     // Main class.
-    public static final double softVersion = 4.4;
+    public static final double softVersion = 4.5;
     public static final double configVersion = 1.1;
 
     public static void main(String[] args) throws InterruptedException {
@@ -202,13 +202,13 @@ public class PortMiner {
 
             // Create runTime parameters.
             if (Multi.getOS() == "WINDOWS") {
-                toRun = new String[] { "bin/mintty.exe", "java.exe", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
+                toRun = new String[] { "bin/mintty.exe", "-t", "PortMiner", "java.exe", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
                         "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
             } else if (Multi.getOS() == "LINUX") {
                 toRun = new String[] { "xterm", "-e", "java", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
                         "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
             } else {
-                toRun = new String[] { "bin/mintty.exe", "java.exe", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
+                toRun = new String[] { "bin/mintty.exe", "-t", "PortMiner", "java.exe", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
                         "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
             }
 
