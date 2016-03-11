@@ -14,7 +14,7 @@ public class Updater {
 
         // Try set serverURI.
         try {
-            serverURI = new URL("http://portminerr.netne.net/portminer.php?query=latestVersion");
+            serverURI = new URL("http://smithy212000.github.io/PortMinerVersion");
         } catch (MalformedURLException e) {
             Logger.log("Exception in Updater.", "error");
             e.printStackTrace();
