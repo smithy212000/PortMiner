@@ -16,7 +16,7 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
     // Main class.
-    public static final double softVersion = 4.5;
+    public static final double softVersion = 4.6;
     public static final double configVersion = 1.1;
 
     public static void main(String[] args) throws InterruptedException {
@@ -63,10 +63,11 @@ public class PortMiner {
         try {
             Progress.setProgress("Getting property port...", 6);
             port = Integer.parseInt(PropParse.getProperty("port"));
-            Progress.setProgress("Getting property server-jar...", 8);
-            serverJar = new File(PropParse.getProperty("server-jar"));
-            Progress.setProgress("Getting property server-jar", 10);
+            Progress.setProgress("Getting property server-jar", 8);
             sServerJar = PropParse.getProperty("server-jar");
+            Progress.setProgress("Getting property server-jar...", 10);
+            serverJar = new File(sServerJar);
+            System.out.println(serverJar.toString());
             Progress.setProgress("Getting property xms...", 12);
             xms = PropParse.getProperty("xms");
             Progress.setProgress("Getting property xmx...", 14);
@@ -130,7 +131,7 @@ public class PortMiner {
 
                 if (result == JFileChooser.APPROVE_OPTION) {
                     serverJar = fChoose.getSelectedFile();
-                    sServerJar = serverJar.toString();
+                    sServerJar = serverJar.getPath().toString();
                     PropParse.setProperty("server-jar", sServerJar);
                 } else {
                     Logger.log("No jar file selected.", "info");
@@ -141,6 +142,7 @@ public class PortMiner {
                 Logger.log("No jar selected. Closing.", "info");
                 System.exit(0);
             }
+        }
             
             // Check for MinTTY if running Windows.
             if (Multi.getOS() == "WINDOWS") {
@@ -260,7 +262,6 @@ public class PortMiner {
             Thread.sleep(250);
             Progress.closeFrame();
             System.exit(0);
-        }
     }
 
 }
