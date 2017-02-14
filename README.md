@@ -6,8 +6,3 @@ As of PortMiner 4.4, you can also run other servers that are set up manually, by
 Download: http://www.planetminecraft.com/mod/fully-automatic-public-server---no-portforwarding-needed
 
 Please use GitHub to report any issues with PortMiner.
-
-# Donate
-PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=59L5CFKDRFAQN
-
-Bitcoin: 1EgWPSuxr2TntdreopfDhyWjfw5KpBTsnD
