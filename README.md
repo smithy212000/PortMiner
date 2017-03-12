@@ -6,3 +6,5 @@ As of PortMiner 4.4, you can also run other servers that are set up manually, by
 Download: http://www.planetminecraft.com/mod/fully-automatic-public-server---no-portforwarding-needed
 
 Please use GitHub to report any issues with PortMiner.
+
+Contains LGPL software from: https://github.com/4thline/cling
