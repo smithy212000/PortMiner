@@ -1,9 +1,9 @@
 # PortMiner
 PortMiner allows you to create Minecraft servers without manually port forwarding, or Hamachi.
 
-As of PortMiner 4.4, you can also run other servers that are set up manually, by setting run-server to false in portminer.properties, and specifying the port and protocol in the same configuration.
+PLease [read the wiki](https://github.com/smithy212000/PortMiner/wiki/Usage) for usage information.
 
-Download: http://www.planetminecraft.com/mod/fully-automatic-public-server---no-portforwarding-needed
+PMC Page: http://www.planetminecraft.com/mod/fully-automatic-public-server---no-portforwarding-needed
 
 Please use GitHub to report any issues with PortMiner.
 
