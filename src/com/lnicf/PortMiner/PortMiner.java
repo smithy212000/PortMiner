@@ -16,7 +16,7 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
 	// Main class.
-	public static final double softVersion = 4.9;
+	public static final double softVersion = 4.91;
 	public static final double configVersion = 1.1;
 
 	public static void main(String[] args) throws InterruptedException {
@@ -248,7 +248,7 @@ public class PortMiner {
 		// Keep looping every 5 seconds, checking if the server is still
 		// running.
 		while (proc.isAlive() == true) {
-			Thread.sleep(5000);
+			Thread.sleep(2500);
 		}
 
 		// Reopen progress bar frame. Close ports and exit.
