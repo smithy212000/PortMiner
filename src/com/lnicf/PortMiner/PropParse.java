@@ -18,6 +18,10 @@ public class PropParse {
 			propFile = new File("portminer.properties");
 		} else if (Multi.getOS() == "LINUX") {
 			propFile = new File(Multi.linHome() + "/PortMiner/portminer.properties");
+			if (!propFile.exists()) {
+				File pmDir = new File(Multi.linHome() + "/PortMiner");
+				pmDir.mkdir();
+			}
 		} else {
 			Logger.log("Unknown OS for properties!", "warn");
 			propFile = new File("portminer.properties");
