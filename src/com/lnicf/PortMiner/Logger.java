@@ -16,6 +16,10 @@ public class Logger {
 			logFile = new File("portminer.log");
 		} else if (Multi.getOS() == "LINUX") {
 			logFile = new File(Multi.linHome() + "/PortMiner/portminerlog.log");
+			if (!logFile.exists()) {
+				File pmDir = new File(Multi.linHome() + "/PortMiner");
+				pmDir.mkdir();
+			}
 		} else {
 			System.out.println(
 					"Unknown or unsupported operating system. File logging disabled, command line output only.");
