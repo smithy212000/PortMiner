@@ -30,7 +30,6 @@ public class PortMiner {
 		boolean runServer = true;
 		String sServerJar = null;
 		String protocol = null;
-		File fMinTTY = new File("bin/mintty.exe");
 		File eulaText = null;
 		if (Multi.getOS() == "WINDOWS") {
 			eulaText = new File("eula.txt");
@@ -146,16 +145,6 @@ public class PortMiner {
 			}
 		}
 
-		// Check for MinTTY if running Windows.
-		if (Multi.getOS() == "WINDOWS") {
-			if (!fMinTTY.exists()) {
-				Logger.log("MinTTY was not found.", "error");
-				JOptionPane.showMessageDialog(null, "MinTTY was not found. PortMiner can not run.", "No MinTTY",
-						JOptionPane.ERROR_MESSAGE);
-				System.exit(1);
-			}
-		}
-
 		// Check if EULA exists.
 		Progress.setProgress("Checking for EULA...", 40);
 		if (!eulaText.exists()) {
@@ -206,13 +195,13 @@ public class PortMiner {
 
 		// Create runTime parameters.
 		if (Multi.getOS() == "WINDOWS") {
-			toRun = new String[] { "bin/mintty.exe", "-t", "PortMiner", "java.exe", "-Xms" + xms + "M",
+			toRun = new String[] { "cmd", "/c", "start", "/WAIT", "java.exe", "-Xms" + xms + "M",
 					"-Xmx" + xmx + "M", "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
 		} else if (Multi.getOS() == "LINUX") {
 			toRun = new String[] { "xterm", "-e", "java", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
 					"-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
 		} else {
-			toRun = new String[] { "bin/mintty.exe", "-t", "PortMiner", "java.exe", "-Xms" + xms + "M",
+			toRun = new String[] { "cmd", "/c", "start", "/WAIT", "java.exe", "-Xms" + xms + "M",
 					"-Xmx" + xmx + "M", "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
 		}
 
@@ -236,7 +225,7 @@ public class PortMiner {
 			Logger.log("Closing port " + port, "info");
 			PortManager.closePort();
 			JOptionPane.showMessageDialog(null, "Error while starting the main server process. Check console.\nPort "
-					+ port + " has been cloesd as the server failed to start.", "Error", JOptionPane.ERROR_MESSAGE);
+					+ port + " has been closed as the server failed to start.", "Error", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
 
