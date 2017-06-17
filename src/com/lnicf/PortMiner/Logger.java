@@ -9,23 +9,7 @@ public class Logger {
 	public static void log(String input, String type) {
 		// Could use something better to log, but this works well.
 		// Initialise file variable.
-		File logFile = null;
-
-		// Set logFile variable, dependent on OS.
-		if (Multi.getOS() == "WINDOWS") {
-			logFile = new File("portminer.log");
-		} else if (Multi.getOS() == "LINUX") {
-			logFile = new File(Multi.linHome() + "/PortMiner/portminerlog.log");
-			if (!logFile.exists()) {
-				File pmDir = new File(Multi.linHome() + "/PortMiner");
-				pmDir.mkdir();
-			}
-		} else {
-			System.out.println(
-					"Unknown or unsupported operating system. File logging disabled, command line output only.");
-			System.out.println("[" + Multi.currentTime() + "][" + type + "]" + input);
-			return;
-		}
+		File logFile = new File(Multi.workingDir() + "/portminer.log");
 
 		// Check if the logfile exists.
 		if (!logFile.exists()) {
