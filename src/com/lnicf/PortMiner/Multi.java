@@ -1,5 +1,6 @@
 package com.lnicf.PortMiner;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -58,8 +59,22 @@ public class Multi {
         return "UNKNOWN";
     }
     
-    // Home location, used only for Linux in this case.
-    public static String linHome() {
-        return System.getProperty("user.home");
-    }
+	public static File workingDir() {
+		
+		File chkDir = null;
+		
+		if (getOS() == "WINDOWS") {
+			chkDir = new File(System.getenv("APPDATA") + "\\PortMiner\\");
+		} else {
+			chkDir = new File(System.getProperty("user.home") + "/PortMiner/");
+		}
+		
+		if(!chkDir.exists()) {
+			chkDir.mkdir();
+		}
+		
+		return chkDir;
+		
+	}
+	
 }
