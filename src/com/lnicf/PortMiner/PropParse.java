@@ -9,23 +9,10 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 public class PropParse {
+	
+	static File propFile = new File(Multi.workingDir() + "/portminer.properties");
+	
 	public static void checkPropFile() {
-		// Initialise File variable.
-		File propFile = null;
-
-		// Set propFile location, dependent on OS.
-		if (Multi.getOS() == "WINDOWS") {
-			propFile = new File("portminer.properties");
-		} else if (Multi.getOS() == "LINUX") {
-			propFile = new File(Multi.linHome() + "/PortMiner/portminer.properties");
-			if (!propFile.exists()) {
-				File pmDir = new File(Multi.linHome() + "/PortMiner");
-				pmDir.mkdir();
-			}
-		} else {
-			Logger.log("Unknown OS for properties!", "warn");
-			propFile = new File("portminer.properties");
-		}
 
 		// Initialise OutputStream, and Properties variables.
 		OutputStream output = null;
@@ -36,14 +23,7 @@ public class PropParse {
 		if (!propFile.exists()) {
 			Logger.log("Properties file does not exist. Attempting to create.", "info");
 			try {
-				if (Multi.getOS() == "WINDOWS") {
-					output = new FileOutputStream("portminer.properties");
-				} else if (Multi.getOS() == "LINUX") {
-					output = new FileOutputStream(Multi.linHome() + "/PortMiner/portminer.properties");
-				} else {
-					output = new FileOutputStream("portminer.properties");
-				}
-
+				output = new FileOutputStream(propFile.toString());
 				prop.setProperty("config-version", Double.toString(PortMiner.configVersion));
 				prop.setProperty("find-ip", "true");
 				prop.setProperty("internal-ip", "0.0.0.0");
@@ -85,17 +65,8 @@ public class PropParse {
 
 		// Set InputStream from FileInputStream location, dependent on OS.
 		try {
-			if (Multi.getOS() == "WINDOWS") {
-				input = new FileInputStream("portminer.properties");
-			} else if (Multi.getOS() == "LINUX") {
-				input = new FileInputStream(Multi.linHome() + "/PortMiner/portminer.properties");
-			} else {
-				input = new FileInputStream("portminer.properties");
-			}
-
-			// Load current properties file.
+			input = new FileInputStream(propFile.toString());
 			prop.load(input);
-
 			Logger.log("Found value: " + prop.getProperty(property), "info");
 			// Get the property.
 			return prop.getProperty(property);
@@ -119,22 +90,10 @@ public class PropParse {
 
 		// Set 'em.
 		try {
-			if (Multi.getOS() == "WINDOWS") {
-				input = new FileInputStream("portminer.properties");
-				prop.load(input);
-				input.close();
-				output = new FileOutputStream("portminer.properties");
-			} else if (Multi.getOS() == "LINUX") {
-				input = new FileInputStream(Multi.linHome() + "/PortMiner/portminer.properties");
-				prop.load(input);
-				input.close();
-				output = new FileOutputStream(Multi.linHome() + "/PortMiner/portminer.properties");
-			} else {
-				input = new FileInputStream("portminer.properties");
-				prop.load(input);
-				input.close();
-				output = new FileOutputStream("portminer.properties");
-			}
+			input = new FileInputStream(propFile.toString());
+			prop.load(input);
+			input.close();
+			output = new FileOutputStream(propFile.toString());
 
 			// Set and store the property, then close the OutputStream.
 			prop.setProperty(property, value);
