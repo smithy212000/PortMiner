@@ -16,7 +16,7 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
 	// Main class.
-	public static final double softVersion = 5.1;
+	public static final double softVersion = 5.2;
 	public static final double configVersion = 1.1;
 
 	public static void main(String[] args) throws InterruptedException {
@@ -34,7 +34,7 @@ public class PortMiner {
 		if (Multi.getOS() == "WINDOWS") {
 			eulaText = new File("eula.txt");
 		} else if (Multi.getOS() == "LINUX") {
-			eulaText = new File(Multi.linHome() + "/PortMiner/eula.txt");
+			eulaText = new File(Multi.workingDir() + "/eula.txt");
 		} else {
 			eulaText = new File("eula.txt");
 		}
@@ -162,7 +162,7 @@ public class PortMiner {
 					if (Multi.getOS() == "WINDOWS") {
 						writer = new PrintWriter("eula.txt", "UTF-8");
 					} else if (Multi.getOS() == "LINUX") {
-						writer = new PrintWriter(Multi.linHome() + "/PortMiner/eula.txt", "UTF-8");
+						writer = new PrintWriter(Multi.workingDir() + "/eula.txt", "UTF-8");
 					} else {
 						writer = new PrintWriter("eula.txt", "UTF-8");
 					}
@@ -213,7 +213,7 @@ public class PortMiner {
 			if (Multi.getOS() == "WINDOWS") {
 				proc = runTime.exec(toRun);
 			} else if (Multi.getOS() == "LINUX") {
-				File serverDir = new File(Multi.linHome() + "/PortMiner/");
+				File serverDir = Multi.workingDir();
 				proc = runTime.exec(toRun, null, serverDir);
 			} else {
 				proc = runTime.exec(toRun);
