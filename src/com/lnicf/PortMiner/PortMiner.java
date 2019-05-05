@@ -16,7 +16,7 @@ available from http://4thline.org/projects/cling/
 
 public class PortMiner {
 	// Main class.
-	public static final double softVersion = 5.2;
+	public static final double softVersion = 5.21;
 	public static final double configVersion = 1.1;
 
 	public static void main(String[] args) throws InterruptedException {
