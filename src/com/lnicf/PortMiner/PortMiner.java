@@ -12,12 +12,14 @@ import javax.swing.JOptionPane;
 PortMiner is created by smithy212000 (LNICF).
 Requires cling-core, cling-support, seamless-http and seamless-util libraries all
 available from http://4thline.org/projects/cling/
+
+This software is 75% thanks to Russian Standard :)
 */
 
 public class PortMiner {
 	// Main class.
-	public static final double softVersion = 5.21;
-	public static final double configVersion = 1.1;
+	public static final double softVersion = 5.3;
+	public static final double configVersion = 1.2;
 
 	public static void main(String[] args) throws InterruptedException {
 		// Initialise all the variables.
@@ -28,6 +30,9 @@ public class PortMiner {
 		String maxpermsize = null;
 		boolean safeClose = false;
 		boolean runServer = true;
+		boolean pluginSupport = false;
+		int pluginPort = 0;
+		String pluginProtocol = null;
 		String sServerJar = null;
 		String protocol = null;
 		File eulaText = null;
@@ -41,12 +46,14 @@ public class PortMiner {
 
 		// If the operating system is unknown or OSX, display message.
 		if (Multi.getOS() == "UNKNOWN" || Multi.getOS() == "MAC") {
+			Logger.log("Unsupported operating system", "warn");
 			JOptionPane.showMessageDialog(null,
 					"Your operating system is currently not supported by PortMiner.\nContinue at your own risk.",
 					"Unsupported OS", JOptionPane.WARNING_MESSAGE);
 		}
 
 		if (Double.parseDouble(PropParse.getProperty("config-version")) != configVersion) {
+			Logger.log("Configuartion out of date", "error");
 			JOptionPane.showMessageDialog(null,
 					"Your configuration is out of date, please delete it and reload PortMiner.",
 					"Outdated configuration", JOptionPane.WARNING_MESSAGE);
@@ -54,6 +61,7 @@ public class PortMiner {
 		}
 
 		Logger.log("PortMiner uses LGPL software from https://github.com/4thline", "info");
+		Logger.log("Made with thanks to Russian Standard :)", "info");
 
 		// Setup JFrame for progress bar and file selector, call update checker.
 		Progress.setupFrame();
@@ -73,10 +81,16 @@ public class PortMiner {
 			xms = PropParse.getProperty("xms");
 			Progress.setProgress("Getting property xmx...", 14);
 			xmx = PropParse.getProperty("xmx");
+			Progress.setProgress("Getting property plugin-support...", 15);
+			pluginSupport = Boolean.parseBoolean(PropParse.getProperty("plugin-support"));
 			Progress.setProgress("Getting property maxpermsize...", 16);
 			maxpermsize = PropParse.getProperty("maxpermsize");
+			Progress.setProgress("Getting property plugin-port...", 17);
+			pluginPort = Integer.parseInt(PropParse.getProperty("plugin-port"));
 			Progress.setProgress("Getting property safe-close...", 18);
 			safeClose = Boolean.parseBoolean(PropParse.getProperty("safe-close"));
+			Progress.setProgress("Getting property plugin-protocol...", 19);
+			pluginProtocol = PropParse.getProperty("plugin-protocol");
 			Progress.setProgress("Getting property run-server...", 20);
 			runServer = Boolean.parseBoolean(PropParse.getProperty("run-server"));
 			Progress.setProgress("Getting property run-server-false-protocol", 22);
@@ -182,11 +196,16 @@ public class PortMiner {
 			}
 		}
 
-		// Open the port.
+		// Open the port(s).
 		Logger.log("Internal IP is " + Multi.internalIP(), "info");
 		Logger.log("Opening port " + port, "info");
 		Progress.setProgress("Attempting to open port " + port, 65);
 		PortManager.openPort(Multi.internalIP(), port, "Minecraft Server", "TCP");
+		if (pluginSupport) {
+			Logger.log("Plugin support enabled in configuration, attempting to open port " + pluginPort, "info");
+			Progress.setProgress("Attempting to open port " + pluginPort, 70);
+			PortManager.openPortPlugin(Multi.internalIP(), pluginPort, "Minecraft Server Plugin", pluginProtocol);
+		}
 
 		// Set up process and runtime.
 		Progress.setProgress("Setting up process and runtime...", 75);
@@ -240,12 +259,17 @@ public class PortMiner {
 			Thread.sleep(2500);
 		}
 
-		// Reopen progress bar frame. Close ports and exit.
+		// Reopen progress bar frame. Close port(s) and exit.
 		Progress.setupFrame();
 		Progress.setProgress("Closing port " + port, 25);
 		Logger.log("Closing port " + port, "info");
 		Thread.sleep(4000);
 		PortManager.closePort();
+		if (pluginSupport) {
+			Progress.setProgress("Closing port " + pluginPort, 50);
+			Logger.log("Closing port " + pluginPort, "info");
+			PortManager.closePortPlugin();
+		}
 		PropParse.setProperty("safe-close", "true");
 		Progress.setProgress("Done!", 100);
 		Thread.sleep(250);
