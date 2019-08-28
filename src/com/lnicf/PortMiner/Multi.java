@@ -42,28 +42,37 @@ public class Multi {
         return finalIP;
     }
 
+    // Cache OSType
+    private static OSType operatingSys = null;
+    
     // Get operating system.
-    public static String getOS() {
-        String operatingSys = System.getProperty("os.name").toLowerCase();
-        if (operatingSys.contains("win"))
-            return "WINDOWS";
-        if (operatingSys.contains("linux"))
-            return "LINUX";
-        if (operatingSys.contains("unix"))
-            return "LINUX";
-        if (operatingSys.contains("mac"))
-            return "MAC";
-        if (operatingSys.contains("OSX"))
-            return "MAC";
-        Logger.log("Couldn't get OS.", "warn");
-        return "UNKNOWN";
+    public static OSType getOS() {
+    	if (operatingSys == null) {
+    		String tempOS = System.getProperty("os.name").toLowerCase();
+            if (tempOS.contains("win"))
+            	operatingSys = OSType.Windows;
+            else if (tempOS.contains("linux"))
+            	operatingSys = OSType.Linux;
+            else if (tempOS.contains("unix"))
+            	operatingSys = OSType.Linux;
+            else if (tempOS.contains("mac"))
+            	operatingSys = OSType.Mac;
+            else if (tempOS.contains("OSX"))
+            	operatingSys = OSType.Mac;
+            else {
+            	operatingSys = OSType.Unknown;
+                Logger.log("Couldn't get OS.", "warn");
+            }
+    	}
+        
+        return operatingSys;
     }
     
 	public static File workingDir() {
 		
 		File chkDir = null;
 		
-		if (getOS() == "WINDOWS") {
+		if (getOS() == OSType.Windows) {
 			chkDir = new File(System.getenv("APPDATA") + "\\PortMiner\\");
 		} else {
 			chkDir = new File(System.getProperty("user.home") + "/PortMiner/");

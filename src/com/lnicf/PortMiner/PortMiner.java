@@ -36,16 +36,16 @@ public class PortMiner {
 		String sServerJar = null;
 		String protocol = null;
 		File eulaText = null;
-		if (Multi.getOS() == "WINDOWS") {
+		if (Multi.getOS() == OSType.Windows) {
 			eulaText = new File("eula.txt");
-		} else if (Multi.getOS() == "LINUX") {
+		} else if (Multi.getOS() == OSType.Linux) {
 			eulaText = new File(Multi.workingDir() + "/eula.txt");
 		} else {
 			eulaText = new File("eula.txt");
 		}
 
 		// If the operating system is unknown or OSX, display message.
-		if (Multi.getOS() == "UNKNOWN" || Multi.getOS() == "MAC") {
+		if (Multi.getOS() == OSType.Unknown || Multi.getOS() == OSType.Mac) {
 			Logger.log("Unsupported operating system", "warn");
 			JOptionPane.showMessageDialog(null,
 					"Your operating system is currently not supported by PortMiner.\nContinue at your own risk.",
@@ -173,9 +173,9 @@ public class PortMiner {
 				PrintWriter writer = null;
 
 				try {
-					if (Multi.getOS() == "WINDOWS") {
+					if (Multi.getOS() == OSType.Windows) {
 						writer = new PrintWriter("eula.txt", "UTF-8");
-					} else if (Multi.getOS() == "LINUX") {
+					} else if (Multi.getOS() == OSType.Linux) {
 						writer = new PrintWriter(Multi.workingDir() + "/eula.txt", "UTF-8");
 					} else {
 						writer = new PrintWriter("eula.txt", "UTF-8");
@@ -213,10 +213,10 @@ public class PortMiner {
 		String[] toRun = null;
 
 		// Create runTime parameters.
-		if (Multi.getOS() == "WINDOWS") {
+		if (Multi.getOS() == OSType.Windows) {
 			toRun = new String[] { "cmd", "/c", "start", "/WAIT", "java.exe", "-Xms" + xms + "M",
 					"-Xmx" + xmx + "M", "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
-		} else if (Multi.getOS() == "LINUX") {
+		} else if (Multi.getOS() == OSType.Linux) {
 			toRun = new String[] { "xterm", "-e", "java", "-Xms" + xms + "M", "-Xmx" + xmx + "M",
 					"-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
 		} else {
@@ -229,9 +229,9 @@ public class PortMiner {
 		// Start the server.
 		Progress.setProgress("Starting process...", 80);
 		try {
-			if (Multi.getOS() == "WINDOWS") {
+			if (Multi.getOS() == OSType.Windows) {
 				proc = runTime.exec(toRun);
-			} else if (Multi.getOS() == "LINUX") {
+			} else if (Multi.getOS() == OSType.Linux) {
 				File serverDir = Multi.workingDir();
 				proc = runTime.exec(toRun, null, serverDir);
 			} else {
