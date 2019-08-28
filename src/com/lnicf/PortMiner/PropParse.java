@@ -35,6 +35,9 @@ public class PropParse {
 				prop.setProperty("safe-close", "true");
 				prop.setProperty("run-server", "true");
 				prop.setProperty("run-server-false-protocol", "TCP");
+				prop.setProperty("plugin-support", "false");
+				prop.setProperty("plugin-port", "25566");
+				prop.setProperty("plugin-protocol", "TCP");
 				prop.store(output, null);
 			} catch (IOException e) {
 				Logger.log("Exception while creating properties file", "error");
