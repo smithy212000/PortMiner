@@ -50,6 +50,17 @@ public class PortMiner {
 			JOptionPane.showMessageDialog(null,
 					"Your operating system is currently not supported by PortMiner.\nContinue at your own risk.",
 					"Unsupported OS", JOptionPane.WARNING_MESSAGE);
+			
+			int dialogResult = JOptionPane.showConfirmDialog(null,
+					"Do you want to run Portminer in manual mode? This will increase the chances of success."
+					+ "\nNOTE: You will need to start the server manually.", "Unsupported OS",
+					JOptionPane.YES_NO_OPTION);
+			
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				NoServer.run();
+			} else {
+				Logger.log("Continuing with Unknown OS type", "warn");
+			}
 		}
 
 		if (Double.parseDouble(PropParse.getProperty("config-version")) != configVersion) {
