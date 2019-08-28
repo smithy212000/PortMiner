@@ -18,7 +18,7 @@ This software is 75% thanks to Russian Standard :)
 
 public class PortMiner {
 	// Main class.
-	public static final double softVersion = 5.3;
+	public static final double softVersion = 5.4;
 	public static final double configVersion = 1.2;
 
 	public static void main(String[] args) throws InterruptedException {
