@@ -235,6 +235,22 @@ public class PortMiner {
 					"-Xmx" + xmx + "M", "-XX:MaxPermSize=" + maxpermsize + "M", "-jar", sServerJar, "nogui" };
 		}
 
+		// Check that xterm is installed for linux users
+		if (Multi.getOS() == OSType.Linux) {
+			try {
+				runTime.exec(new String[] {"xterm", "-e", "exit"});
+			} catch (Exception e) {
+				Logger.log("xterm is not installed!", "error");
+				e.printStackTrace();
+				Thread.sleep(1000);
+				Logger.log("Closing port " + port, "info");
+				PortManager.closePort();
+				JOptionPane.showMessageDialog(null, "xterm is required for Portminer to run. Please install it and try again.\nPort "
+						+ port + " has been closed as the server failed to start.", "Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
+		}
+		
 		Process proc = null;
 
 		// Start the server.
