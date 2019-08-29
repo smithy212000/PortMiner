@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class Multi {
     // Class for obtaining small bits of info.
@@ -48,7 +49,7 @@ public class Multi {
     // Get operating system.
     public static OSType getOS() {
     	if (operatingSys == null) {
-    		String tempOS = System.getProperty("os.name").toLowerCase();
+    		String tempOS = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
             if (tempOS.contains("win"))
             	operatingSys = OSType.Windows;
             else if (tempOS.contains("linux"))
