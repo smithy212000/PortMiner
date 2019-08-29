@@ -1,7 +1,10 @@
 package com.lnicf.PortMiner;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
@@ -36,6 +39,15 @@ public class PortMiner {
 		String sServerJar = null;
 		String protocol = null;
 		File eulaText = null;
+		
+		// Write cling output to file
+		try {
+			System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(Multi.workingDir() + "/portminer-upnp.log"))));
+		} catch (FileNotFoundException e1) {
+			Logger.log("Could not redirect error stream output to file", "warn");
+			e1.printStackTrace();
+		}
+		
 		if (Multi.getOS() == OSType.Windows) {
 			eulaText = new File("eula.txt");
 		} else if (Multi.getOS() == OSType.Linux) {
@@ -255,6 +267,7 @@ public class PortMiner {
 
 		// Start the server.
 		Progress.setProgress("Starting process...", 80);
+		Logger.log("Starting process with: Xms="+xms+"M, Xmx="+xmx+"M, MaxPermSize="+maxpermsize+"M", "info");
 		try {
 			if (Multi.getOS() == OSType.Windows) {
 				proc = runTime.exec(toRun);
