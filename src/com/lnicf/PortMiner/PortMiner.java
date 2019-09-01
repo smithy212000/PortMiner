@@ -85,6 +85,10 @@ public class PortMiner {
 
 		Logger.log("PortMiner uses LGPL software from https://github.com/4thline", "info");
 		Logger.log("Made with thanks to Russian Standard :)", "info");
+		
+		// Runtime information
+		Logger.log("Operating System: " + System.getProperty("os.name") + ", Arch: " + System.getProperty("os.arch"), "info");
+		Logger.log("Java Version: " + System.getProperty("java.version"), "info");
 
 		// Setup JFrame for progress bar and file selector, call update checker.
 		Progress.setupFrame();
