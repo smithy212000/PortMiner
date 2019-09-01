@@ -20,7 +20,7 @@ public class PortManager {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.UDP, name)};
 		} else if (protocol.equals("UDP_TCP")) {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.UDP, name),
-										 new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
+					new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
 		}
 		else {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
