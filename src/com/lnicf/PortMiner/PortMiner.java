@@ -118,8 +118,8 @@ public class PortMiner {
 			runServer = Boolean.parseBoolean(PropParse.getProperty("run-server"));
 			Progress.setProgress("Getting property run-server-false-protocol", 22);
 			protocol = PropParse.getProperty("run-server-false-protocol");
-			if (protocol.equals("TCP") || protocol.equals("UDP")) {
-
+			if (protocol.equals("TCP") || protocol.equals("UDP") || protocol.equals("UDP_TCP")) {
+				
 			} else {
 				Logger.log("Exception while getting properties.", "error");
 				JOptionPane.showMessageDialog(null,
