@@ -1,0 +1,6 @@
+
+.project
+*.class
+/bin/
+.classpath
+/cling-master/
