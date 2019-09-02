@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import com.lnicf.PortMiner.Logger.LogType;
+
 public class PropParse {
 	
 	static File propFile = new File(Multi.workingDir() + "/portminer.properties");
@@ -21,7 +23,7 @@ public class PropParse {
 		// If the properties file does not exist, create it, set properties, and
 		// save.
 		if (!propFile.exists()) {
-			Logger.log("Properties file does not exist. Attempting to create.", "info");
+			Logger.log("Properties file does not exist. Attempting to create.", LogType.INFO);
 			try {
 				output = new FileOutputStream(propFile.toString());
 				prop.setProperty("config-version", Double.toString(PortMiner.configVersion));
@@ -40,7 +42,7 @@ public class PropParse {
 				prop.setProperty("plugin-protocol", "TCP");
 				prop.store(output, null);
 			} catch (IOException e) {
-				Logger.log("Exception while creating properties file", "error");
+				Logger.log("Exception while creating properties file", LogType.ERROR);
 				e.printStackTrace();
 				System.exit(1);
 			}
@@ -49,18 +51,18 @@ public class PropParse {
 			try {
 				output.close();
 			} catch (IOException e) {
-				Logger.log("Exception in PropParse", "error");
+				Logger.log("Exception in PropParse", LogType.ERROR);
 				e.printStackTrace();
 				System.exit(1);
 			}
-			Logger.log("Done", "info");
+			Logger.log("Done", LogType.INFO);
 		}
 	}
 
 	public static String getProperty(String property) {
 		// Call the function above.
 		PropParse.checkPropFile();
-		Logger.log("Getting property: " + property, "info");
+		Logger.log("Getting property: " + property, LogType.INFO);
 
 		// Initialise Properties and InputStream variables.
 		Properties prop = new Properties();
@@ -70,11 +72,11 @@ public class PropParse {
 		try {
 			input = new FileInputStream(propFile.toString());
 			prop.load(input);
-			Logger.log("Found value: " + prop.getProperty(property), "info");
+			Logger.log("Found value: " + prop.getProperty(property), LogType.INFO);
 			// Get the property.
 			return prop.getProperty(property);
 		} catch (IOException e) {
-			Logger.log("Exception while trying to get property!", "error");
+			Logger.log("Exception while trying to get property!", LogType.ERROR);
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -85,7 +87,7 @@ public class PropParse {
 	public static void setProperty(String property, String value) {
 		// Call checkPropFile function in this class.
 		PropParse.checkPropFile();
-		Logger.log("Setting property: " + property + " to " + value, "info");
+		Logger.log("Setting property: " + property + " to " + value, LogType.INFO);
 		// Initialise Properties, InputStream and OutputStream variables.
 		Properties prop = new Properties();
 		InputStream input = null;
@@ -103,7 +105,7 @@ public class PropParse {
 			prop.store(output, null);
 			output.close();
 		} catch (IOException e) {
-			Logger.log("Exception while trying to get property!", "error");
+			Logger.log("Exception while trying to get property!", LogType.ERROR);
 			e.printStackTrace();
 			System.exit(1);
 		}

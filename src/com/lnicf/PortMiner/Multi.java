@@ -6,6 +6,8 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import com.lnicf.PortMiner.Logger.LogType;
+
 public class Multi {
     // Class for obtaining small bits of info.
     
@@ -22,7 +24,7 @@ public class Multi {
         try {
             manualIP = Boolean.parseBoolean(PropParse.getProperty("find-ip"));
         } catch (Exception e) {
-            Logger.log("Exception in Multi.internalIP(), failed to parse boolean. Possible invalid config?", "error");
+            Logger.log("Exception in Multi.internalIP(), failed to parse boolean. Possible invalid config?", LogType.ERROR);
             e.printStackTrace();
             System.exit(1);
         }
@@ -34,7 +36,7 @@ public class Multi {
             try {
                 finalIP = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
-                Logger.log("Exception while trying to find internal IP address.", "error");
+                Logger.log("Exception while trying to find internal IP address.", LogType.ERROR);
                 e.printStackTrace();
                 System.exit(1);
             }
@@ -62,7 +64,7 @@ public class Multi {
             	operatingSys = OSType.Mac;
             else {
             	operatingSys = OSType.Unknown;
-                Logger.log("Couldn't get OS.", "warn");
+                Logger.log("Couldn't get OS.", LogType.WARN);
             }
     	}
         

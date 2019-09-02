@@ -5,6 +5,8 @@ import org.fourthline.cling.UpnpServiceImpl;
 import org.fourthline.cling.support.igd.PortMappingListener;
 import org.fourthline.cling.support.model.PortMapping;
 
+import com.lnicf.PortMiner.Logger.LogType;
+
 public class PortManager {
 	// Initialise PortMapping and UpnpService variables.
 	private static PortMapping[] mapping = null;
@@ -12,7 +14,7 @@ public class PortManager {
 	private static UpnpService upnpServicePlugin = null;
 
 	public static void openPort(String internalIP, int port, String name, String protocol) {
-		Logger.log("Creating port mapping", "info");
+		Logger.log("Creating port mapping", LogType.INFO);
 		// Create mapping, then use it.
 		if (protocol.equals("TCP")) {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
@@ -26,13 +28,13 @@ public class PortManager {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
 		}
 		
-		Logger.log("Creating UPnP service", "info");
+		Logger.log("Creating UPnP service", LogType.INFO);
 		upnpService = new UpnpServiceImpl(new PortMappingListener(mapping));
 		upnpService.getControlPoint().search();
 	}
 	
 	public static void openPortPlugin(String internalIP, int port, String name, String protocol) {
-		Logger.log("Creating plugin port mapping", "info");
+		Logger.log("Creating plugin port mapping", LogType.INFO);
 		// Create mapping, then use it.
 		if (protocol.equals("TCP")) {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
@@ -42,7 +44,7 @@ public class PortManager {
 			mapping = new PortMapping[] {new PortMapping(port, internalIP, PortMapping.Protocol.TCP, name)};
 		}
 		
-		Logger.log("Creating plugin UPnP service", "info");
+		Logger.log("Creating plugin UPnP service", LogType.INFO);
 		upnpServicePlugin = new UpnpServiceImpl(new PortMappingListener(mapping));
 		upnpServicePlugin.getControlPoint().search();
 	}
