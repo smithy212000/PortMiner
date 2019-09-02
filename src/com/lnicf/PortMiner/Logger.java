@@ -6,7 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Logger {
-	public static void log(String input, String type) {
+	
+	public enum LogType {
+		INFO,
+		WARN,
+		ERROR
+	}
+	
+	public static void log(String input, LogType type) {
 		// Could use something better to log, but this works well.
 		// Initialise file variable.
 		File logFile = new File(Multi.workingDir() + "/portminer.log");
@@ -40,7 +47,7 @@ public class Logger {
 
 		// Get argument type and process it, then print to console.
 
-		if (type == "info") {
+		if (type == LogType.INFO) {
 			System.out.println("[" + Multi.currentTime() + "][INFO] " + input);
 
 			try {
@@ -50,7 +57,7 @@ public class Logger {
 				e.printStackTrace();
 				System.exit(1);
 			}
-		} else if (type == "warn") {
+		} else if (type == LogType.WARN) {
 			System.out.println("[" + Multi.currentTime() + "][WARN] " + input);
 
 			try {
@@ -60,7 +67,7 @@ public class Logger {
 				e.printStackTrace();
 				System.exit(1);
 			}
-		} else if (type == "error") {
+		} else if (type == LogType.ERROR) {
 			System.out.println("[" + Multi.currentTime() + "][ERROR] " + input);
 
 			try {
