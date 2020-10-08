@@ -59,7 +59,7 @@ public class PortMiner {
     Logger.log("Made with thanks to Russian Standard :)", "info");
     
     if(Trac.allowTrac()) {
-    	String tracUrl = new String("https://sm-serv.com/trac.php?key=7a34f5fa1a7f347a9219cefc71c3227c&os="+Multi.getOS()+"&dt="+Multi.currentTimeTrac()+"&firstRun="+firstRun+"&id="+Trac.getUUID());
+    	String tracUrl = new String("https://trac-url-not-in-use.com/?k="+Multi.getOS()+"&dt="+Multi.currentTimeTrac()+"&firstRun="+firstRun+"&id="+Trac.getUUID());
     	try {
 			Trac.httpsReq(tracUrl);
 		} catch (IOException e) {
