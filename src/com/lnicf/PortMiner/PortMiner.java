@@ -58,17 +58,6 @@ public class PortMiner {
     Logger.log("PortMiner uses LGPL software from https://github.com/4thline", "info");
     Logger.log("Made with thanks to Russian Standard :)", "info");
     
-    if(Trac.allowTrac()) {
-    	String tracUrl = new String("https://trac-url-not-in-use.com/?k="+Multi.getOS()+"&dt="+Multi.currentTimeTrac()+"&firstRun="+firstRun+"&id="+Trac.getUUID());
-    	try {
-			Trac.httpsReq(tracUrl);
-		} catch (IOException e) {
-			Logger.log("Error in trac", "error");
-			e.printStackTrace();
-			System.exit(1);
-		}
-    }
-    
     Progress.setupFrame();
     Progress.setProgress("Checking for updates...", 5);
     Updater.checkForUpdates();
